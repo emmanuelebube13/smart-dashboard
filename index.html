@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All-in-One Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --text: #1e1e1e;
+      --card: #ffffff;
+      --accent: #1976d2;
+    }
+    [data-theme="dark"] {
+      --bg: #121212;
+      --text: #f0f0f0;
+      --card: #1e1e1e;
+      --accent: #4fc3f7;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 1rem;
+      background: var(--accent);
+      color: white;
+      font-size: 1.8rem;
+    }
+    #main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-auto-rows: auto;
+      gap: 1rem;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+    .card {
+      background: var(--card);
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    input, select, textarea, button {
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      font-size: 1rem;
+      width: 100%;
+    }
+    ul { padding-left: 0; list-style: none; }
+    li {
+      padding: 0.5rem;
+      background: var(--bg);
+      margin: 0.2rem 0;
+      border-left: 4px solid var(--accent);
+      border-radius: 5px;
+    }
+    .complete { text-decoration: line-through; opacity: 0.6; }
+    canvas { max-width: 100%; }
+  </style>
+</head>
+<body>
+  <header> Personal Productivity & Learning Dashboard</header>
+  <div id="main">
+
+    <div class="card">
+      <h2>Clock</h2>
+      <div id="clock" style="font-size:3rem;"></div>
+    </div>
+
+    <div class="card">
+      <h2>Add Task</h2>
+      <input id="taskInput" placeholder="What to do?" />
+      <select id="taskType">
+        <option>Personal</option><option>Professional</option><option>School</option>
+        <option>Financial</option><option>Work</option><option>Family</option>
+        <option>Health</option><option>Creative</option><option>Spiritual</option>
+      </select>
+      <select id="priority"><option>High</option><option>Mid</option><option>Low</option></select>
+      <input type="datetime-local" id="deadline" />
+      <textarea id="notes" placeholder="Optional notes"></textarea>
+      <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <div class="card">
+      <h2>Tasks</h2>
+      <ul id="taskList"></ul>
+    </div>
+
+    <div class="card">
+      <h2>Export & Analyze</h2>
+      <select id="exportRange">
+        <option value="today">Today</option>
+        <option value="week">This Week</option>
+        <option value="month">This Month</option>
+      </select>
+      <button onclick="exportCSV()">Export CSV</button>
+      <canvas id="taskChart" height="200"></canvas>
+      <canvas id="taskHeat" height="200"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Inspiration</h2>
+      <div id="affirmation">“You are growing daily.”</div>
+      <div id="quote">“The best time to learn was yesterday. The next best time is now.”</div>
+    </div>
+
+    <div class="card">
+      <h2>Quiz of the Day</h2>
+      <div id="quizQ">What does HTML stand for?</div>
+      <ul id="quizOpts">
+        <li><button onclick="checkQuiz(0)">Hyperlink Text Marking Language</button></li>
+        <li><button onclick="checkQuiz(1)">HyperText Markup Language</button></li>
+        <li><button onclick="checkQuiz(2)">Home Tool Markup Language</button></li>
+        <li><button onclick="checkQuiz(3)">Hyper Transferable Markup Logic</button></li>
+      </ul>
+      <div id="quizResult"></div>
+    </div>
+  </div>
+
+  <script>
+    const clock = () => {
+      document.getElementById("clock").textContent = new Date().toLocaleTimeString();
+    }
+    setInterval(clock, 1000); clock();
+
+    const taskInput = document.getElementById('taskInput');
+    const taskList = document.getElementById('taskList');
+    let tasks = JSON.parse(localStorage.getItem('myTasks') || '[]');
+
+    document.getElementById('taskInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') addTask();
+    });
+
+    function addTask() {
+      const task = {
+        text: taskInput.value,
+        type: document.getElementById('taskType').value,
+        priority: document.getElementById('priority').value,
+        deadline: document.getElementById('deadline').value,
+        notes: document.getElementById('notes').value,
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(),
+        day: new Date().toLocaleDateString('en-US', { weekday: 'long' }),
+        completed: false
+      };
+      tasks.push(task);
+      localStorage.setItem('myTasks', JSON.stringify(tasks));
+      renderTasks();
+      taskInput.value = document.getElementById('notes').value = document.getElementById('deadline').value = '';
+    }
+
+    function renderTasks() {
+      taskList.innerHTML = '';
+      tasks.forEach((t, i) => {
+        const li = document.createElement('li');
+        li.className = t.completed ? 'complete' : '';
+        li.innerHTML = `${t.text} <br><small>${t.type} | ${t.day} | ${t.priority} | ${t.deadline || 'No deadline'}</small> <br>${t.notes || ''}
+          <button onclick="markDone(${i})">✔</button> <button onclick="delTask(${i})">🗑</button>`;
+        taskList.appendChild(li);
+      });
+    }
+    function markDone(i) {
+      tasks[i].completed = !tasks[i].completed;
+      localStorage.setItem('myTasks', JSON.stringify(tasks));
+      renderTasks();
+    }
+    function delTask(i) {
+      if (confirm("Delete this task?")) tasks.splice(i,1);
+      localStorage.setItem('myTasks', JSON.stringify(tasks));
+      renderTasks();
+    }
+    renderTasks();
+
+    function exportCSV() {
+      let range = document.getElementById("exportRange").value;
+      let now = new Date(), selected = [];
+      const start = new Date();
+      if (range === 'week') start.setDate(now.getDate() - 7);
+      else if (range === 'month') start.setMonth(now.getMonth() - 1);
+      else start.setDate(now.getDate());
+      selected = tasks.filter(t => new Date(t.date) >= start);
+
+      let csv = "Task,Type,Priority,Date,Time,Day,Deadline,Notes\n" +
+        selected.map(t => `${t.text},${t.type},${t.priority},${t.date},${t.time},${t.day},${t.deadline},${t.notes}`).join("\n");
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = "tasks.csv";
+      a.click();
+    }
+
+    const ctx1 = document.getElementById('taskChart').getContext('2d');
+    const ctx2 = document.getElementById('taskHeat').getContext('2d');
+
+    const chartType = {};
+    tasks.forEach(t => chartType[t.type] = (chartType[t.type] || 0) + 1);
+    new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: Object.keys(chartType),
+        datasets: [{
+          label: 'Tasks by Type',
+          data: Object.values(chartType),
+          backgroundColor: '#1976d2'
+        }]
+      }
+    });
+
+    const hours = Array(24).fill(0);
+    tasks.forEach(t => {
+      const h = parseInt(t.time.split(":")[0]);
+      hours[h]++;
+    });
+    new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: [...Array(24).keys()].map(h => `${h}:00`),
+        datasets: [{ label: 'Heatmap (Tasks/Hour)', data: hours, fill: false, borderColor: '#4caf50' }]
+      }
+    });
+
+    function checkQuiz(i) {
+      document.getElementById('quizResult').textContent = i === 1 ? "✅ Correct!" : "❌ Try again.";
+    }
+  </script>
+</body>
+</html>

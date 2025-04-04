@@ -1,0 +1,122 @@
+[
+    {
+        "No": 1,
+        "Category": "Statistics",
+        "Topic": "Descriptive Statistics",
+        "Description": "Summary measures such as mean, median, mode, variance, and standard deviation."
+    },
+    {
+        "No": 2,
+        "Category": "Statistics",
+        "Topic": "Inferential Statistics",
+        "Description": "Making predictions or inferences about a population based on a sample."
+    },
+    {
+        "No": 3,
+        "Category": "Statistics",
+        "Topic": "Hypothesis Testing",
+        "Description": "Assessing assumptions using methods like t-tests, chi-square tests, and ANOVA."
+    },
+    {
+        "No": 4,
+        "Category": "Statistics",
+        "Topic": "P-Values",
+        "Description": "Determining the significance of results in hypothesis testing."
+    },
+    {
+        "No": 5,
+        "Category": "Statistics",
+        "Topic": "Confidence Intervals",
+        "Description": "A range of values used to estimate the true value of a population parameter."
+    },
+    {
+        "No": 6,
+        "Category": "Probability",
+        "Topic": "Bayes' Theorem",
+        "Description": "A way to update the probability of a hypothesis based on new evidence."
+    },
+    {
+        "No": 7,
+        "Category": "Probability",
+        "Topic": "Conditional Probability",
+        "Description": "Probability of an event given that another event has occurred."
+    },
+    {
+        "No": 8,
+        "Category": "Probability",
+        "Topic": "Probability Distributions",
+        "Description": "Mathematical functions that describe the likelihood of outcomes (e.g., Normal, Binomial)."
+    },
+    {
+        "No": 9,
+        "Category": "Probability",
+        "Topic": "Law of Large Numbers",
+        "Description": "The principle that as a sample size grows, its mean gets closer to the average of the whole population."
+    },
+    {
+        "No": 10,
+        "Category": "Probability",
+        "Topic": "Central Limit Theorem",
+        "Description": "The distribution of sample means approximates a normal distribution as the sample size becomes large."
+    },
+    {
+        "No": 11,
+        "Category": "Machine Learning",
+        "Topic": "Supervised Learning",
+        "Description": "Training models on labeled data for tasks like regression and classification."
+    },
+    {
+        "No": 12,
+        "Category": "Machine Learning",
+        "Topic": "Unsupervised Learning",
+        "Description": "Finding hidden patterns in data without labeled outcomes (e.g., clustering)."
+    },
+    {
+        "No": 13,
+        "Category": "Machine Learning",
+        "Topic": "Overfitting and Underfitting",
+        "Description": "Challenges in model generalization to new data."
+    },
+    {
+        "No": 14,
+        "Category": "Machine Learning",
+        "Topic": "Bias-Variance Tradeoff",
+        "Description": "Balancing model complexity and accuracy."
+    },
+    {
+        "No": 15,
+        "Category": "Machine Learning",
+        "Topic": "Cross-Validation",
+        "Description": "A technique for assessing how well a model generalizes to unseen data."
+    },
+    {
+        "No": 16,
+        "Category": "Deep Learning",
+        "Topic": "Neural Networks",
+        "Description": "Computational models inspired by the human brain."
+    },
+    {
+        "No": 17,
+        "Category": "Deep Learning",
+        "Topic": "Backpropagation",
+        "Description": "A method used to train neural networks."
+    },
+    {
+        "No": 18,
+        "Category": "Deep Learning",
+        "Topic": "Activation Functions",
+        "Description": "Functions that determine output of neural network nodes."
+    },
+    {
+        "No": 19,
+        "Category": "Deep Learning",
+        "Topic": "CNNs (Convolutional Neural Networks)",
+        "Description": "Specialized for processing grid-like data such as images."
+    },
+    {
+        "No": 20,
+        "Category": "Deep Learning",
+        "Topic": "RNNs (Recurrent Neural Networks)",
+        "Description": "Suited for sequence prediction tasks like language modeling."
+    }
+]
