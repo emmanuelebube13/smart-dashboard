@@ -1,0 +1,87 @@
+
+Dashboard App – Pseudocode & Flow Design
+=========================================
+
+OBJECTIVE:
+----------
+To build a personal productivity and study dashboard with cloud sync, learning engine, task manager,
+and visual analytics.
+
+KEY COMPONENTS:
+---------------
+1. Clock Display (Live updating)
+2. Add Task (with metadata: type, priority, notes, deadline)
+3. Task List (mark as complete, delete)
+4. Export Task Data to CSV
+5. Task Visualization (bar chart by type, line chart by hour)
+6. Topic Suggestion (randomized from external JSON)
+7. Study Log Textarea
+8. Goals & Ideas Area (Save for later)
+9. Daily Quiz Engine
+10. Dark/Light Mode Toggle
+11. Firebase Integration (auth + Firestore)
+
+FLOW OF LOGIC:
+--------------
+START
+
+1. Display Clock:
+   - Every 1 second, update time display
+
+2. Task Input:
+   - User types in task, selects type, priority, deadline, and optional note
+   - On button click or Enter, store task to:
+     a) LocalStorage
+     b) Firebase Firestore
+
+3. Task Rendering:
+   - Read from localStorage or Firebase
+   - For each task:
+     - Display details
+     - Allow complete toggle and delete
+
+4. Export Function:
+   - Filter tasks by timeframe (today, week, month)
+   - Convert filtered tasks to CSV
+   - Trigger download
+
+5. Topic Engine:
+   - Load JSON file with 1000+ topics
+   - Randomly pick one every 2 hours
+   - Display with category + description
+
+6. Chart Visualization:
+   - Count tasks by type and by time of day
+   - Plot:
+     a) Bar chart (tasks by type)
+     b) Line chart (hourly heatmap)
+
+7. Quiz Engine:
+   - Predefined question & answer set
+   - On answer click, show if correct
+
+8. Goals & Ideas:
+   - Save freeform notes to localStorage
+   - Display in a list
+
+9. Study Log:
+   - Textarea for free-form daily learning notes
+
+10. Dark/Light Mode:
+    - Toggle with button
+    - Switch data-theme attribute on HTML tag
+
+11. Firebase:
+    - Initialize app with project ID and API key
+    - Use Firestore to store tasks, ideas
+    - Use Google login to identify users
+
+END
+
+TECH STACK:
+-----------
+- HTML5, CSS3
+- JavaScript (Vanilla)
+- Chart.js
+- Firebase (Auth + Firestore)
+- GitHub Pages or Firebase Hosting

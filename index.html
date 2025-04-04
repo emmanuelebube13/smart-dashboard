@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Productivity Dashboard</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Chart.js for visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Firebase Config -->
+  <script type="module" src="firebase-config.js"></script>
+</head>
+<body>
+  <!-- Dark/Light Mode Toggle -->
+  <button class="toggle-btn" onclick="toggleTheme()">🌓 Theme</button>
+
+  <!-- Header -->
+  <header>🚀 Smart Productivity & Study Dashboard</header>
+
+  <!-- Main Grid Layout -->
+  <div id="main">
+
+    <!-- Clock -->
+    <div class="card">
+      <h2>⏰ Clock</h2>
+      <div id="clock" style="font-size:2rem;"></div>
+    </div>
+
+    <!-- Add Task -->
+    <div class="card">
+      <h2>📋 Add Task</h2>
+      <input id="taskInput" placeholder="Task" />
+      <select id="taskType">
+        <option>Personal</option><option>Professional</option><option>School</option>
+        <option>Financial</option><option>Work</option><option>Family</option>
+        <option>Health</option><option>Spiritual</option><option>Creative</option>
+      </select>
+      <select id="priority"><option>High</option><option>Mid</option><option>Low</option></select>
+      <input type="datetime-local" id="deadline" />
+      <textarea id="notes" placeholder="Optional notes..."></textarea>
+      <button onclick="addTask()">Add</button>
+    </div>
+
+    <!-- Task List -->
+    <div class="card">
+      <h2>✅ Task List</h2>
+      <ul id="taskList"></ul>
+    </div>
+
+    <!-- Charts & Export -->
+    <div class="card">
+      <h2>📤 Export & Charts</h2>
+      <select id="exportRange">
+        <option value="today">Today</option>
+        <option value="week">This Week</option>
+        <option value="month">This Month</option>
+      </select>
+      <button onclick="exportCSV()">Export CSV</button>
+      <canvas id="taskChart"></canvas>
+      <canvas id="taskHeat"></canvas>
+    </div>
+
+    <!-- Topic of the Day -->
+    <div class="card">
+      <h2>🧠 Topic to Learn</h2>
+      <div id="studyTopic">Loading topic...</div>
+    </div>
+
+    <!-- Study Log -->
+    <div class="card">
+      <h2>📚 Study Log</h2>
+      <textarea id="studyLog" placeholder="What did you study today?"></textarea>
+    </div>
+
+    <!-- Ideas/Goals -->
+    <div class="card">
+      <h2>🌱 Later Goals & Ideas</h2>
+      <textarea id="ideas" placeholder="Type an idea or goal..."></textarea>
+      <button onclick="saveIdea()">Save</button>
+      <ul id="ideaList"></ul>
+    </div>
+
+    <!-- Daily Quiz -->
+    <div class="card">
+      <h2>🎯 Quiz</h2>
+      <div id="quizQ">What is Python used for?</div>
+      <ul id="quizOpts">
+        <li><button onclick="checkQuiz(0)">Web Design</button></li>
+        <li><button onclick="checkQuiz(1)">Data Analysis</button></li>
+        <li><button onclick="checkQuiz(2)">Image Editing</button></li>
+      </ul>
+      <div id="quizResult"></div>
+    </div>
+
+  </div>
+
+  <!-- Script Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
