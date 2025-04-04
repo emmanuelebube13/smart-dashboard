@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Productivity Dashboard</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="firebase-config.js"></script>
+</head>
+<body>
+  <button class="toggle-btn" onclick="toggleTheme()">🌓 Theme</button>
+  <header>🚀 Smart Productivity & Study Dashboard</header>
+  <div id="main">
+
+    <!-- Clock -->
+    <div class="card" data-section="clock">
+      <div class="card-controls">
+        <button onclick="toggleMinimize(this)">🗕</button>
+        <button onclick="closeCard(this)">❌</button>
+      </div>
+      <div class="card-content">
+        <h2>⏰ Clock</h2>
+        <div id="clock" style="font-size:2rem;"></div>
+      </div>
+    </div>
+
+    <!-- Daily Time Planner -->
+    <div class="card" data-section="planner">
+      <div class="card-controls">
+        <button onclick="toggleMinimize(this)">🗕</button>
+        <button onclick="closeCard(this)">❌</button>
+      </div>
+      <div class="card-content">
+        <h2>📅 Daily Time Planner</h2>
+        <div id="plannerControls">
+          <input id="plannerTask" placeholder="New task for today..." />
+          <select id="plannerHour">
+            <option value="">Choose Time Slot</option>
+          </select>
+          <button onclick="addPlannerTask()">Add</button>
+        </div>
+        <div id="timeGrid"></div>
+      </div>
+    </div>
+
+    <!-- Placeholder for Restore Closed Cards -->
+    <div id="restoreArea" class="card" data-section="restoreArea">
+      <!-- Restored cards will be shown here -->
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

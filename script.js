@@ -162,3 +162,148 @@ setInterval(() => {
     a.click();
   }
   
+  // Initialize time grid for daily planner
+  function initPlanner() {
+    const timeGrid = document.getElementById("timeGrid");
+    const stored = JSON.parse(localStorage.getItem("dailyPlanner") || "{}");
+  
+    timeGrid.innerHTML = '';
+  
+    for (let h = 6; h <= 23; h++) {
+      const display = h < 12 ? `${h} AM` : (h === 12 ? '12 PM' : `${h - 12} PM`);
+      const slot = document.createElement("div");
+      slot.className = "timeSlot";
+      slot.id = `hour-${h}`;
+      slot.ondrop = dropTask;
+      slot.ondragover = (e) => e.preventDefault();
+  
+      const label = document.createElement("h4");
+      label.textContent = display;
+  
+      const taskList = document.createElement("div");
+      taskList.className = "taskList";
+  
+      const tasks = stored[h] || [];
+      tasks.forEach((taskText, index) => {
+        const task = document.createElement("div");
+        task.className = "taskItem";
+        task.draggable = true;
+        task.textContent = taskText;
+        task.dataset.hour = h;
+        task.dataset.index = index;
+  
+        task.ondragstart = (e) => {
+          e.dataTransfer.setData("text/plain", JSON.stringify({ text: taskText, fromHour: h, index }));
+        };
+  
+        taskList.appendChild(task);
+      });
+  
+      slot.appendChild(label);
+      slot.appendChild(taskList);
+      timeGrid.appendChild(slot);
+    }
+  }
+  
+  function dropTask(e) {
+    e.preventDefault();
+    const data = JSON.parse(e.dataTransfer.getData("text/plain"));
+    const toHour = parseInt(e.currentTarget.id.split("-")[1]);
+  
+    const stored = JSON.parse(localStorage.getItem("dailyPlanner") || "{}");
+  
+    // Remove from original slot
+    stored[data.fromHour].splice(data.index, 1);
+    if (!stored[toHour]) stored[toHour] = [];
+    stored[toHour].push(data.text);
+  
+    localStorage.setItem("dailyPlanner", JSON.stringify(stored));
+    initPlanner();
+  }
+  
+
+  function addPlannerTask() {
+    const task = document.getElementById("plannerTask").value.trim();
+    let hour = document.getElementById("plannerHour").value;
+  
+    if (!task) return alert("Please enter a task.");
+  
+    const stored = JSON.parse(localStorage.getItem("dailyPlanner") || "{}");
+  
+    // 🧠 Auto-select first empty hour if none is picked
+    if (!hour) {
+      for (let h = 6; h <= 23; h++) {
+        if (!stored[h] || stored[h].length === 0) {
+          hour = h;
+          break;
+        }
+      }
+      if (!hour) return alert("No available time slots left today.");
+    }
+  
+    stored[hour] = stored[hour] || [];
+    stored[hour].push(task);
+  
+    localStorage.setItem("dailyPlanner", JSON.stringify(stored));
+    document.getElementById("plannerTask").value = '';
+    document.getElementById("plannerHour").value = '';
+    initPlanner();
+  }
+
+  const closedCards = JSON.parse(localStorage.getItem("closedCards") || "[]");
+
+function toggleMinimize(button) {
+  const card = button.closest(".card");
+  card.classList.toggle("minimized");
+}
+
+function closeCard(button) {
+  const card = button.closest(".card");
+  const section = card.dataset.section;
+  card.classList.add("hidden");
+
+  if (!closedCards.includes(section)) {
+    closedCards.push(section);
+    localStorage.setItem("closedCards", JSON.stringify(closedCards));
+  }
+
+  renderRestoreButton();
+}
+
+function renderRestoreButton() {
+  let restoreDiv = document.getElementById("restoreArea");
+  if (!restoreDiv) {
+    restoreDiv = document.createElement("div");
+    restoreDiv.id = "restoreArea";
+    document.body.appendChild(restoreDiv);
+  }
+  restoreDiv.innerHTML = '';
+  closedCards.forEach(section => {
+    const btn = document.createElement("button");
+    btn.textContent = `Restore ${section}`;
+    btn.onclick = () => restoreCard(section);
+    restoreDiv.appendChild(btn);
+  });
+}
+
+function restoreCard(section) {
+  const card = document.querySelector(`.card[data-section='${section}']`);
+  if (card) card.classList.remove("hidden");
+
+  const index = closedCards.indexOf(section);
+  if (index !== -1) closedCards.splice(index, 1);
+  localStorage.setItem("closedCards", JSON.stringify(closedCards));
+  renderRestoreButton();
+}
+
+// On load, hide cards already marked as closed
+window.addEventListener('DOMContentLoaded', () => {
+  closedCards.forEach(section => {
+    const card = document.querySelector(`.card[data-section='${section}']`);
+    if (card) card.classList.add("hidden");
+  });
+  renderRestoreButton();
+});
+
+  
+  

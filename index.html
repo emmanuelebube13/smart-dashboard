@@ -30,6 +30,29 @@
       <div id="clock" style="font-size:2rem;"></div>
     </div>
 
+    <!-- Daily Planner Section -->
+<div class="card">
+  <h2>📅 Daily Time Planner</h2>
+  <div id="plannerControls">
+    <input id="plannerTask" placeholder="New task for today..." />
+    <select id="plannerHour">
+      <option value="">Choose Time Slot</option>
+      <script>
+        for (let h = 6; h <= 23; h++) {
+          const display = h <= 12 ? `${h}AM` : `${h - 12}PM`;
+          document.write(`<option value="${h}">${display}</option>`);
+        }
+      </script>
+    </select>
+    <button onclick="addPlannerTask()">Add</button>
+  </div>
+  <div id="timeGrid">
+    <!-- Time blocks will render here -->
+  </div>
+</div>
+
+    
+
     <!-- Add Task -->
     <div class="card">
       <h2>📋 Add Task</h2>
