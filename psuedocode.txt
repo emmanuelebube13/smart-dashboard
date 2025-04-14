@@ -83,5 +83,5 @@ TECH STACK:
 - HTML5, CSS3
 - JavaScript (Vanilla)
 - Chart.js
-- Firebase (Auth + Firestore)
-- GitHub Pages or Firebase Hosting
+- Firebase (Auth + Firestore)  --to be implemented
+- GitHub Pages or Firebase Hosting -- to be implemented

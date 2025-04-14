@@ -1,4 +1,4 @@
-// Define available themes
+// Defining available themes
 const themes = ["light", "dark", "0and1", "darkcircuit", "renaisse", "Rose"];
 
 
@@ -171,7 +171,7 @@ function toggleTheme() {
     a.click();
   }
   
-  // Initialize time grid for daily planner
+
   function initPlanner() {
     const timeGrid = document.getElementById("timeGrid");
     const stored = JSON.parse(localStorage.getItem("dailyPlanner") || "{}");
@@ -305,7 +305,7 @@ function restoreCard(section) {
   renderRestoreButton();
 }
 
-// On load, hide cards already marked as closed
+
 window.addEventListener('DOMContentLoaded', () => {
   closedCards.forEach(section => {
     const card = document.querySelector(`.card[data-section='${section}']`);
@@ -315,7 +315,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   
- // Function to call the Advice Slip API and display an "Idle Time" suggestion
+
 async function getIdleActivity() {
   try {
     const response = await fetch('https://api.adviceslip.com/advice');
