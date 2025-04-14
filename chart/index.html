@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Chart Builder</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+<body>
+
+  <div class="container">
+    <h1 id="welcomeHeading">Welcome! Loading your chart builder...</h1>
+    
+    <div class="toggle-container">
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider round"></span>
+      </label>
+      <span style="margin-left: 10px;">Dark Mode</span>
+    </div>
+    
+
+    <div class="controls">
+      <div>
+        <label for="chartType">Choose chart type:</label>
+        <select id="chartType">
+          <option value="bar">Bar</option>
+          <option value="line">Line</option>
+          <option value="pie">Pie</option>
+          <option value="doughnut">Doughnut</option>
+          <option value="radar">Radar</option>
+        </select>
+      </div>
+      <div>
+        <label for="datasetLabel">Dataset Name:</label>
+        <input type="text" id="datasetLabel" value="My Data" />
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button onclick="addRow()">Add Row</button>
+      <button onclick="removeRow()">Remove Last Row</button>
+      <button onclick="addDataset()">Add Dataset</button>
+      <button onclick="removeDataset()">Remove Dataset</button>
+    </div>
+
+    <div class="btn-row">
+      <input type="file" id="csvFile" accept=".csv">
+      <button onclick="exportToCSV()">Export CSV</button>
+    </div>
+    
+    
+    <table id="dataTable">
+      <thead>
+        <tr id="headerRow">
+          <th>Label</th>
+          <th>
+            <input type="text" class="dataset-label" value="Dataset 1">
+          </th>
+        </tr>
+      </thead>
+      <tbody id="dataBody">
+        <tr>
+          <td><input type="text" value="Jan"></td>
+          <td><input type="number" value="10"></td>
+        </tr>
+        <tr>
+          <td><input type="text" value="Feb"></td>
+          <td><input type="number" value="20"></td>
+        </tr>
+        <tr>
+          <td><input type="text" value="Mar"></td>
+          <td><input type="number" value="30"></td>
+        </tr>
+      </tbody>
+    </table>
+    
+
+    <canvas id="myChart" width="800" height="400"></canvas>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

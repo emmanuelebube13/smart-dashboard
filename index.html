@@ -30,6 +30,28 @@
       <div id="clock" style="font-size:2rem;"></div>
     </div>
 
+
+      <!-- Charts & Export -->
+      <div class="card">
+        <h2>📤 Export & Charts</h2>
+        <select id="exportRange">
+          <option value="today">Today</option>
+          <option value="week">This Week</option>
+          <option value="month">This Month</option>
+        </select>
+        <button onclick="exportCSV()">Export CSV</button>
+        <canvas id="taskChart"></canvas>
+        <canvas id="taskHeat"></canvas>
+      </div>
+
+       <!-- New IDLE Time Card -->
+  <div class="card">
+    <h2>IDLE Time</h2>
+    <div id="idleActivity">Loading activity...</div>
+    <button onclick="getIdleActivity()">Get Activity</button>
+  </div>
+
+
     <!-- Daily Planner Section -->
 <div class="card">
   <h2>📅 Daily Time Planner</h2>
@@ -74,18 +96,7 @@
       <ul id="taskList"></ul>
     </div>
 
-    <!-- Charts & Export -->
-    <div class="card">
-      <h2>📤 Export & Charts</h2>
-      <select id="exportRange">
-        <option value="today">Today</option>
-        <option value="week">This Week</option>
-        <option value="month">This Month</option>
-      </select>
-      <button onclick="exportCSV()">Export CSV</button>
-      <canvas id="taskChart"></canvas>
-      <canvas id="taskHeat"></canvas>
-    </div>
+  
 
     <!-- Topic of the Day -->
     <div class="card">

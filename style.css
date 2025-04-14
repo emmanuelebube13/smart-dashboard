@@ -10,15 +10,56 @@
     --card: #1e1e1e;
     --accent: #4fc3f7;
   }
-  html, body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    height: 100vh;
-    overflow: hidden;
-  }
+/* New theme: 0and1 */
+[data-theme="0and1"] {
+  --bg: rgba(0, 0, 0, 0.8);
+  --text: #0ff;
+  --card: rgba(20, 20, 20, 0.8);
+  --accent: #0f0;
+  --bg-image: url('0and1theme.jpeg');
+}
+
+/* New theme: darkcircuit */
+[data-theme="darkcircuit"] {
+  --bg: #1a1a1a;
+  --text: #e0e0e0;
+  --card: rgba(30, 30, 30, 0.9);
+  --accent: #ff4081;
+  --bg-image: url('darkcircuit.jpeg');
+}
+
+/* New theme: renaisse */
+[data-theme="renaisse"] {
+  --bg: #f4f1ee;
+  --text: #3e2723;
+  --card: #ffffff;
+  --accent: #b71c1c;
+  --bg-image: url('renaisse.jpeg');
+}
+
+/* New theme: Rose */
+[data-theme="Rose"] {
+  --bg: #ffe4e1;
+  --text: #800020;
+  --card: #ffffff;
+  --accent: #ff69b4;
+  --bg-image: url('Rose.jpeg');
+}
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+}
+
   header {
     background: var(--accent);
     color: white;
@@ -162,3 +203,15 @@
     display: none;
   }
   
+
+  /* In style.css, add this new rule at the bottom or near your grid styles */
+.chart-section {
+  grid-column: 1 / -1;
+}
+
+
+/* Optional additional styling for the IDLE Time card */
+#idleActivity {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}

@@ -1,13 +1,22 @@
+// Define available themes
+const themes = ["light", "dark", "0and1", "darkcircuit", "renaisse", "Rose"];
+
+
 // Clock
 setInterval(() => {
     document.getElementById("clock").textContent = new Date().toLocaleTimeString();
   }, 1000);
   
   // Theme toggle
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme');
-    document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-  }
+ // Updated Theme toggle function
+function toggleTheme() {
+  let currentTheme = document.documentElement.getAttribute('data-theme');
+  let currentIndex = themes.indexOf(currentTheme);
+  let nextIndex = (currentIndex + 1) % themes.length;
+  let nextTheme = themes[nextIndex];
+  document.documentElement.setAttribute('data-theme', nextTheme);
+}
+
   
   // Task System
   let tasks = JSON.parse(localStorage.getItem('myTasks') || '[]');
@@ -306,4 +315,21 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   
-  
+ // Function to call the Advice Slip API and display an "Idle Time" suggestion
+async function getIdleActivity() {
+  try {
+    const response = await fetch('https://api.adviceslip.com/advice');
+    const data = await response.json();
+    // The API returns an object with a 'slip' property containing the advice
+    document.getElementById('idleActivity').textContent = data.slip.advice;
+  } catch (error) {
+    document.getElementById('idleActivity').textContent = 'Failed to load activity.';
+    console.error('Error fetching advice:', error);
+  }
+}
+
+// Automatically fetch a suggestion when the page loads
+window.addEventListener('DOMContentLoaded', () => {
+  getIdleActivity();
+});
+
